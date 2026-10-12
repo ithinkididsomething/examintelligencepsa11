@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import dotenv from 'dotenv';
 import { GoogleGenAI, Type } from '@google/genai';
 
@@ -1274,7 +1274,21 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+// Only start the long-running listener when executed directly (npm run dev / node server.ts).
+// When imported by a serverless platform (e.g. Vercel's api/ handler) this skips listen()
+// so the Express app can be mounted into a function instead.
+const isEntryModule =
+  process.env.VERCEL !== '1' &&
+  (process.argv[1]
+    ? import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
+    : true);
+
+if (isEntryModule) {
+  startServer().catch((err) => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  });
+}
+
+export { app, startServer };
+export default app;
