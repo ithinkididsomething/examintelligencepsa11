@@ -1,0 +1,8 @@
+{
+  "name": "Remix Exam Intelligence Assistant",
+  "description": "Analyze previous question papers and official syllabi to calculate study priorities, map exam patterns, and generate personalized revision plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
