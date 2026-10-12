@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import app from '../server';
+import app from '../server.js';
 
 // Vercel catch-all serverless function: mounts the full Express app so every
 // /api/* route (Gemini analysis, flashcards, questions, etc.) works in production.
